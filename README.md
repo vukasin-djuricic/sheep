@@ -1,6 +1,6 @@
 # English:
 
-# sheeps  
+# sheep  
 **2D Computer Graphics Project**
 
 ## Documentation
@@ -64,7 +64,7 @@ Downloaded from:
 
 # Serbian:
 
-# sheeps
+# sheep
 2D computer graphics project
 
 Dokumentacija:
