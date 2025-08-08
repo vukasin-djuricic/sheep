@@ -23,7 +23,7 @@ The storm consists of **4 phases**:
 4. **Thunder** occurs.
 
 Thunder includes **flickering effects** to simulate lightning flashes (brightness changes twice).  
-The **lightning structure** is generated using **L-systems**, where points between the top and bottom of the lightning bolt are created recursively using **random weights**.  
+The **lightning structure** is generated using **L-systems** ([lapointe_stiert.pdf](https://www.cs.rpi.edu/~cutler/classes/advancedgraphics/S09/final_projects/lapointe_stiert.pdf)), where points between the top and bottom of the lightning bolt are created recursively using **random weights**.  
 To simulate lightning glow, a **Gaussian blur** (using 4 neighboring pixels) is applied.
 
 Once the **negative sheep is shaven** (RMB), the **storm stops**.
@@ -83,7 +83,7 @@ Oluja se sastoji iz 4 faze:
 4. Grmljavina
 
 Grmljavina se sastoji iz flickera, da bi simuliralo bljestanje groma (dva trenutka u kojima se menja brightness).
-Struktura groma je napravljena koristeci L systems, gde su tacke izmedju vrha i dna groma rekurzivno izgenerisane,
+Struktura groma je napravljena koristeci L systems ([lapointe_stiert.pdf](https://www.cs.rpi.edu/~cutler/classes/advancedgraphics/S09/final_projects/lapointe_stiert.pdf)), gde su tacke izmedju vrha i dna groma rekurzivno izgenerisane,
 koristeći random težine (weights). I da bi simuliralo osvetljenje munje, koristi se Gaussian blur (4 okolna pixela).
 Kada se negative ovca osisa (desnim klikom), oluja prestaje.
 
