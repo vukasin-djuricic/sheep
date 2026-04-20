@@ -1,110 +1,80 @@
-# English:
+# Sheep Meadow — 2D Graphics Engine Demo
 
-# sheep  
-**2D Computer Graphics Project**
+A real-time 2D graphics application built from scratch in C using OpenGL (via GLFW/GLAD). Features procedural lightning generation, particle systems, sprite animation, tile-based world rendering, and interactive gameplay mechanics.
 
-## Documentation
+**Built as a university project for the 2D Computer Graphics course at RAF Belgrade.**
 
-A meadow with sheep.  
-When the user hovers over a sheep with the **right mouse button (RMB)**, particles scatter and the sheep is shaven.  
-After a while (`shaven_timeout`), the wool grows back – this only applies to the **main sheep** controlled with **WASD**.
+<!-- If you have a screenshot or GIF, add it here: -->
+![Demo](screenshots/demo.GIF)
 
-There is a **well** placed randomly on the field.  
-Clicking on the well **spawns a new sheep**.  
-To spawn sheep faster, the **Q key** can be used (no cooldown).
+## Features
 
-There is a **20% chance** that a **negative sheep** spawns, triggering a **storm**, which lasts until the sheep is shaven.  
-When a negative sheep is created, the **negative filter** is applied via `draw_spritesheet_negative()` from `rafgl.h`.
-
-The storm consists of **4 phases**:
-1. A **darkened circle** (with a gradient around the edge to resemble a cloud) expands to radius 100,  
-2. A **2-second pause**,  
-3. The circle **expands to fill the entire screen**,  
-4. **Thunder** occurs.
-
-Thunder includes **flickering effects** to simulate lightning flashes (brightness changes twice).  
-The **lightning structure** is generated using **L-systems** ([lapointe_stiert.pdf](https://www.cs.rpi.edu/~cutler/classes/advancedgraphics/S09/final_projects/lapointe_stiert.pdf)), where points between the top and bottom of the lightning bolt are created recursively using **random weights**.  
-To simulate lightning glow, a **Gaussian blur** (using 4 neighboring pixels) is applied.
-
-Once the **negative sheep is shaven** (RMB), the **storm stops**.
-
-While holding the **T key**, **10 rotating orbs** form around the main sheep.  
-Once fully formed, **lightning is drawn between the main sheep and the negative one**.
-
-The orbs rotate using trigonometric functions:  
-- `y = sin(counter)`,  
-- `x = cos(counter)`,  
-and the **counter increases every frame**.
-
----
+- **Tile-based world** — 128x128 procedurally generated meadow with camera scrolling
+- **Sprite animation** — Animated sheep with multiple states (idle, moving, shaved) and directional sprites
+- **Particle system** — Up to 500 particles with elasticity-based physics, triggered on sheep shearing
+- **Procedural lightning** — Generated using L-systems with recursive subdivision and Gaussian blur for glow
+- **Storm system** — Multi-phase weather effect with expanding cloud circles, screen darkening, and thunder flicker
+- **AI sheep behavior** — State machine driven (idle/move) with random wandering patterns
+- **Interactive gameplay** — Drag sheep, spawn new ones from a well, shear them with right-click
 
 ## Controls
 
-- `T` – Hitbox test: draws lightning after 10 orbs appear  
-- `RMB` – Shave a sheep  
-- `LMB` – Click on well to spawn a sheep  
-- `Q` – Spawn sheep without cooldown  
-- `LMB (hold)` – Drag the main sheep around
+| Key | Action |
+|-----|--------|
+| `WASD` | Move main sheep |
+| `RMB` (hover) | Shear a sheep |
+| `LMB` on well | Spawn a new sheep |
+| `LMB` (hold) | Drag main sheep |
+| `Q` | Quick-spawn sheep (no cooldown) |
+| `T` (hold) | Activate orb attack — draws lightning to negative sheep |
 
----
+## Technical Highlights
 
-## Modified
+- Custom single-header framework (`rafgl.h`) wrapping OpenGL for 2D raster operations
+- L-system based lightning bolt generation ([based on this paper](https://www.cs.rpi.edu/~cutler/classes/advancedgraphics/S09/final_projects/lapointe_stiert.pdf))
+- Negative color filter for "cursed" sheep with 20% spawn probability
+- Gaussian blur post-processing for lightning glow effect
+- Trigonometric orbital animation for attack orbs
 
-**rafgl.h**  
-Lines `653`, `686`: Spritesheets had a thin line at the top (likely due to format) – drawing now starts after it.
+## Building & Running
 
----
+### Prerequisites
 
-## Sprites
+- GCC
+- GLFW 3 library
 
-Downloaded from:  
-[https://www.spriters-resource.com/pc_computer/stardewvalley/sheet/169024/](https://www.spriters-resource.com/pc_computer/stardewvalley/sheet/169024/)
+### Linux / macOS
 
+```bash
+# Install GLFW
+sudo apt-get install libglfw3-dev   # Debian/Ubuntu
+brew install glfw                    # macOS
 
+# Build and run
+cd sheep/
+make
+```
 
-# Serbian:
+### Windows (Code::Blocks)
 
-# sheep
-2D computer graphics project
+Open `sheep/RAFGL.cbp` in Code::Blocks and build the project. The GLFW libraries are included in `sheep/libs/`.
 
-Dokumentacija:
+## Project Structure
 
-Poljana sa ovcama,
-Kada se predje desnim klikom (RMB) preko ovce razlete se particles i osisamo je.
-Posle nekog vremena (shaven_timeout) joj opet izraste vuna - vazi samo za glavnu ovcu koja se krece na WASD.
-Imamo bunar negde random na terenu. Kada kliknemo na njega stvori se ovca.
-Da se brze naprave ovce moze klikom dugmeta Q.
-Postoje 20% sanse da se stvori negative ovca, pri cemu se desava grmljavina, dok se ovca ne osisa.
-Kada se kreira negative ovca, koristi se negative filter u funkciji u rafgl.h draw_spritesheet_negative().
-Oluja se sastoji iz 4 faze:
-1. Zatamnjenog kruga (po kruznici ima gradijent da vise lici na oblak) koji se siri do radiusa 100,
-2. Pauza 2 sekunde,
-3. Prosirenje kruga do kraja ekrana,
-4. Grmljavina
+```
+sheep/
+├── main.c              # Entry point, engine initialization
+├── src/
+│   └── main_state.c   # All game logic (sheep AI, storms, particles, rendering)
+├── include/
+│   ├── rafgl.h         # RAFGL framework (single-header 2D graphics library)
+│   ├── main_state.h    # Game state interface
+│   └── game_constants.h
+├── res/                # Sprites, tiles, and fonts
+├── libs/               # Pre-built GLFW for Windows
+└── Makefile            # Linux/macOS build
+```
 
-Grmljavina se sastoji iz flickera, da bi simuliralo bljestanje groma (dva trenutka u kojima se menja brightness).
-Struktura groma je napravljena koristeci L systems ([lapointe_stiert.pdf](https://www.cs.rpi.edu/~cutler/classes/advancedgraphics/S09/final_projects/lapointe_stiert.pdf)), gde su tacke izmedju vrha i dna groma rekurzivno izgenerisane,
-koristeći random težine (weights). I da bi simuliralo osvetljenje munje, koristi se Gaussian blur (4 okolna pixela).
-Kada se negative ovca osisa (desnim klikom), oluja prestaje.
+## License
 
-Kada se drzi T (formira 10 kruzica koji rotiraju),
-nacrtace se munje izmedju korisnikove i negative ovce.
-
-Kružići koji se iscrtavaju oko ovce se odredjuju koristeći sin(brojac) za y,
-i cos(brojac) za x. Brojac se povecava svaki frejm.
-
-KOMANDE:
-T - test za hitboxove, crta munju kada se iscrta svih 10 kruzica
-RMB - sisaj ovcu,
-LMB - na bunar spawnuj ovcu,
-Q - spawnovanje bez cooldowna,
-LMB hold - moze da se prenese ovca negde (samo glavna korisnicka)
-
-
-Modified>
-
-rafgl.h:
-line 653,686: Spritesheetovi su imali malu liniju na vrhu, (do formata vrv) pa da krene da iscrtava posle nje
-
-sprites skinuti:
-https://www.spriters-resource.com/pc_computer/stardewvalley/sheet/169024/
+This project was created for educational purposes.
