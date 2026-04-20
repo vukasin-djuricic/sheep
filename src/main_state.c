@@ -591,7 +591,10 @@ void draw_spawn_circles(rafgl_raster_t *raster)
                 int tx = cosf(radian_br) * 50;
                 int ty = sinf(radian_br) * 50;
                 br += 36;
-                rafgl_raster_draw_circle(raster,storm_sheep_pos_x+32+tx-3,storm_sheep_pos_y+40+ty+3,5,rafgl_RGB(1,255,4));
+                int cx = storm_sheep_pos_x+32+tx-3;
+                int cy = storm_sheep_pos_y+40+ty+3;
+                if(cx - 5 >= 0 && cx + 5 < raster->width && cy - 5 >= 0 && cy + 5 < raster->height)
+                    rafgl_raster_draw_circle(raster,cx,cy,5,rafgl_RGB(1,255,4));
                 tmpArr[i][0] = storm_sheep_pos_x+32+tx;
                 tmpArr[i][1] = storm_sheep_pos_y+32+ty;
             }
@@ -600,9 +603,17 @@ void draw_spawn_circles(rafgl_raster_t *raster)
 
             rafgl_pixel_rgb_t c;
             c.rgba = rafgl_RGB(1,255,4);//(89,186,231);
-            for(int y = storm_sheep_pos_y-100; y<storm_sheep_pos_y+100;y++)
+            int y_start = storm_sheep_pos_y-100;
+            int y_end = storm_sheep_pos_y+100;
+            int x_start = storm_sheep_pos_x-100;
+            int x_end = storm_sheep_pos_x+100;
+            if(y_start < 0) y_start = 0;
+            if(x_start < 0) x_start = 0;
+            if(y_end > raster->height) y_end = raster->height;
+            if(x_end > raster->width) x_end = raster->width;
+            for(int y = y_start; y<y_end;y++)
             {
-                for(int x = storm_sheep_pos_x-100; x<storm_sheep_pos_x+100;x++)
+                for(int x = x_start; x<x_end;x++)
                 {
                     if(is_point_inside_convex_hull(tmpArr,x,y))
                         pixel_at_pm(raster,x,y) = c;
@@ -617,7 +628,10 @@ void draw_spawn_circles(rafgl_raster_t *raster)
             int tx = cosf(radian_br) * 50;
             int ty = sinf(radian_br) * 50;
             br += 36;
-            rafgl_raster_draw_circle(raster,storm_sheep_pos_x+32+tx,storm_sheep_pos_y+40+ty,6,rafgl_RGB(1,255,4));//(89,186,231));
+            int cx = storm_sheep_pos_x+32+tx;
+            int cy = storm_sheep_pos_y+40+ty;
+            if(cx - 6 >= 0 && cx + 6 < raster->width && cy - 6 >= 0 && cy + 6 < raster->height)
+                rafgl_raster_draw_circle(raster,cx,cy,6,rafgl_RGB(1,255,4));//(89,186,231));
         }
 
 }
