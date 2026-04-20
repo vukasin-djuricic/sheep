@@ -4,8 +4,9 @@ A real-time 2D graphics application built from scratch in C using OpenGL (via GL
 
 **Built as a university project for the 2D Computer Graphics course at RAF Belgrade.**
 
-<!-- If you have a screenshot or GIF, add it here: -->
 ![Demo](screenshots/demo.GIF)
+
+![Gameplay](screenshots/animation.gif)
 
 ## Features
 
